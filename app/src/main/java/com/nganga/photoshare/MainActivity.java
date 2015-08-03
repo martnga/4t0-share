@@ -22,7 +22,7 @@ import java.util.Random;
 public class MainActivity extends ListActivity {
 
 
-    private static final String FIREBASE_URL = "https://4t0share.firebaseio.com";
+    private static final String FIREBASE_URL = "https://4t0share.firebaseio.com/";
 
     private String mUsername;
     private Firebase mFirebaseRef;
@@ -113,7 +113,7 @@ public class MainActivity extends ListActivity {
         if (mUsername == null) {
             Random r = new Random();
             // Assign a random user name if we don't have one saved.
-            mUsername = "JavaUser" + r.nextInt(100000);
+            mUsername = "Rafiki " + r.nextInt(100000);
             prefs.edit().putString("username", mUsername).commit();
         }
     }

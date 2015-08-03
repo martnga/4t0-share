@@ -1,7 +1,6 @@
 package com.nganga.photoshare;
 
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,9 @@ import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
-/**
- * Created by nganga on 8/3/15.
- */
+
+
 public abstract class FirebaseListAdapter<T> extends BaseAdapter {
 
     private Query mRef;
@@ -31,14 +28,8 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
     private List<String> mKeys;
     private ChildEventListener mListener;
 
-    /**
-     * @param mRef        The Firebase location to watch for data changes. Can also be a slice of a location, using some
-     *                    combination of <code>limit()</code>, <code>startAt()</code>, and <code>endAt()</code>,
-     * @param mModelClass Firebase will marshall the data at a location into an instance of a class that you provide
-     * @param mLayout     This is the mLayout used to represent a single list item. You will be responsible for populating an
-     *                    instance of the corresponding view with the data from an instance of mModelClass.
-     * @param activity    The activity containing the ListView
-     */
+
+
     public FirebaseListAdapter(Query mRef, Class<T> mModelClass, int mLayout, Activity activity) {
         this.mRef = mRef;
         this.mModelClass = mModelClass;
@@ -46,6 +37,7 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
         mInflater = activity.getLayoutInflater();
         mModels = new ArrayList<T>();
         mKeys = new ArrayList<String>();
+
         // Look for all child events. We will then map them to our own internal ArrayList, which backs ListView
         mListener = this.mRef.addChildEventListener(new ChildEventListener() {
             @Override
