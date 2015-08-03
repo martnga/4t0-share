@@ -154,26 +154,26 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
         return i;
     }
 
-//    @Override
-//    public View getView(int i, View view, ViewGroup viewGroup) {
-//        if (view == null) {
-//            view = mInflater.inflate(mLayout, viewGroup, false);
-//        }
-//
-//        T model = mModels.get(i);
-//        // Call out to subclass to marshall this model into the provided view
-//        populateView(view, model);
-//        return view;
-//    }
-//
-//    /**
-//     * Each time the data at the given Firebase location changes, this method will be called for each item that needs
-//     * to be displayed. The arguments correspond to the mLayout and mModelClass given to the constructor of this class.
-//     * <p/>
-//     * Your implementation should populate the view using the data contained in the model.
-//     *
-//     * @param v     The view to populate
-//     * @param model The object containing the data used to populate the view
-//     */
-//    protected abstract void populateView(View v, T model);
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        if (view == null) {
+            view = mInflater.inflate(mLayout, viewGroup, false);
+        }
+
+        T model = mModels.get(i);
+        // Call out to subclass to marshall this model into the provided view
+        populateView(view, model);
+        return view;
+    }
+
+    /**
+     * Each time the data at the given Firebase location changes, this method will be called for each item that needs
+     * to be displayed. The arguments correspond to the mLayout and mModelClass given to the constructor of this class.
+     * <p/>
+     * Your implementation should populate the view using the data contained in the model.
+     *
+     * @param v     The view to populate
+     * @param model The object containing the data used to populate the view
+     */
+    protected abstract void populateView(View v, T model);
 }
