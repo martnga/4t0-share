@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -23,7 +24,7 @@ public class MainActivity extends ListActivity {
 
     private String mUsername;
     private Firebase mFirebaseRef;
-    private ValueEventListener mConnectedListener;
+    private ValueEventListener mListener;
     private ChatListAdapter mChatListAdapter;
 
     @Override
@@ -78,7 +79,7 @@ public class MainActivity extends ListActivity {
         });
 
         // Finally, a little indication of connection status
-        mConnectedListener = mFirebaseRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
+        mListener = mFirebaseRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean connected = (Boolean) dataSnapshot.getValue();
