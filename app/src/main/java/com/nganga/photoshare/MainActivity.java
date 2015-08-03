@@ -1,13 +1,10 @@
 package com.nganga.photoshare;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -15,57 +12,56 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
 import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.Random;
 
-
 public class MainActivity extends ListActivity {
+
 
     private static final String FIREBASE_URL = "https://4t0share.firebaseio.com";
 
     private String mUsername;
     private Firebase mFirebaseRef;
-    private ValueEventListener mListener;
+    private ValueEventListener mConnectedListener;
     private ChatListAdapter mChatListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    // Make sure we have a mUsername
-    setupUsername();
+        // Make sure we have a mUsername
+        setupUsername();
 
-    setTitle(mUsername + "feels like");
+        setTitle(mUsername + " feels like:");
 
-    // Setup our Firebase mFirebaseRef
-    mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
+        // Setup our Firebase mFirebaseRef
+        mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
 
-    // Setup our input methods. Enter key on the keyboard or pushing the send button
-    EditText inputText = (EditText) findViewById(R.id.messageInput);
-    inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-            if (actionId == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+        // Setup our input methods. Enter key on the keyboard or pushing the send button
+        EditText inputText = (EditText) findViewById(R.id.messageInput);
+        inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                    sendMessage();
+                }
+                return true;
+            }
+        });
+
+        findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 sendMessage();
             }
-            return true;
-        }
-    });
+        });
 
-    findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            sendMessage();
-        }
-    });
-
-}
+    }
 
     @Override
     public void onStart() {
@@ -73,7 +69,7 @@ public class MainActivity extends ListActivity {
         // Setup our view and list adapter. Ensure it scrolls to the bottom as data changes
         final ListView listView = getListView();
         // Tell our list adapter that we only want 50 messages at a time
-        mChatListAdapter = new ChatListAdapter(mFirebaseRef.limit(30), this, R.layout.chat_message, mUsername);
+        mChatListAdapter = new ChatListAdapter(mFirebaseRef.limit(50), this, R.layout.chat_message, mUsername);
         listView.setAdapter(mChatListAdapter);
         mChatListAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
@@ -84,7 +80,7 @@ public class MainActivity extends ListActivity {
         });
 
         // Finally, a little indication of connection status
-        mListener = mFirebaseRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
+        mConnectedListener = mFirebaseRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean connected = (Boolean) dataSnapshot.getValue();
@@ -115,7 +111,7 @@ public class MainActivity extends ListActivity {
         if (mUsername == null) {
             Random r = new Random();
             // Assign a random user name if we don't have one saved.
-            mUsername = "Bookie" + r.nextInt(100000);
+            mUsername = "JavaUser" + r.nextInt(100000);
             prefs.edit().putString("username", mUsername).commit();
         }
     }
@@ -131,8 +127,4 @@ public class MainActivity extends ListActivity {
             inputText.setText("");
         }
     }
-}
-
-
-*/
 }
