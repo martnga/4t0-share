@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    //exclude licences that might give build errors
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
@@ -18,12 +25,7 @@ android {
         }
     }
 
-    //exclude licences that might give build errors
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE-FIREBASE.txt'
-        exclude 'META-INF/NOTICE'
-    }
+
 }
 
 dependencies {

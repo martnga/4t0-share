@@ -1,5 +1,7 @@
 package com.nganga.photoshare;
 
+import android.app.Activity;
+
 /**
  * Created by nganga on 8/3/15.
  */
