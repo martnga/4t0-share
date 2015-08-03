@@ -15,6 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import java.util.Random;
 
 
@@ -110,7 +115,7 @@ public class MainActivity extends ListActivity {
         if (mUsername == null) {
             Random r = new Random();
             // Assign a random user name if we don't have one saved.
-            mUsername = "JavaUser" + r.nextInt(100000);
+            mUsername = "Bookie" + r.nextInt(100000);
             prefs.edit().putString("username", mUsername).commit();
         }
     }
@@ -129,5 +134,5 @@ public class MainActivity extends ListActivity {
 }
 
 
-
+*/
 }
